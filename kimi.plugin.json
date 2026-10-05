@@ -1,0 +1,38 @@
+{
+  "name": "codex",
+  "version": "1.0.6",
+  "description": "Use Codex from Kimi Code to review code or delegate tasks.",
+  "keywords": ["codex", "openai", "review", "delegate", "second-opinion"],
+  "author": "Xu Yao (ported from OpenAI's codex-plugin-cc)",
+  "homepage": "https://github.com/Hyacinth-YX/codex-plugin-kimi",
+  "license": "Apache-2.0",
+  "commands": "./commands/",
+  "agents": "./agents/",
+  "skills": "./skills/",
+  "sessionStart": {
+    "skill": "codex-cli-runtime"
+  },
+  "hooks": [
+    {
+      "event": "SessionStart",
+      "command": "node ./scripts/session-lifecycle-hook.mjs SessionStart",
+      "timeout": 5
+    },
+    {
+      "event": "SessionEnd",
+      "command": "node ./scripts/session-lifecycle-hook.mjs SessionEnd",
+      "timeout": 5
+    },
+    {
+      "event": "Stop",
+      "command": "node ./scripts/stop-review-gate-hook.mjs",
+      "timeout": 600
+    }
+  ],
+  "interface": {
+    "displayName": "Codex",
+    "shortDescription": "Use Codex from Kimi Code to review code or delegate tasks",
+    "longDescription": "Wraps the local Codex app server so Kimi Code can run read-only reviews, adversarial reviews, and delegate implementation tasks to Codex, with resumable threads and background job tracking. Ported from openai/codex-plugin-cc.",
+    "developerName": "Xu Yao"
+  }
+}
